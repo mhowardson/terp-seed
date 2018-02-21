@@ -1,4 +1,23 @@
 Rails.application.configure do
+   
+  # devise says to define default url
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # set up for email sending even in dev mode
+  # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.delivery_method = :smtp
+  
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => "587",
+    :authentication => :plain,
+    :user_name => "mhowardson@canadiancannabis.co",
+    :password => ENV["SMTP_ENTRY"],
+    :enable_starttls_auto => true
+  }
+
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
@@ -52,5 +71,16 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'terps-alpha365.c9users.io/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host =>'terps-alpha365.c9users.io' }
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.office365.com',
+    :port           => '587',
+    :authentication => :login,
+    :user_name      => ENV['SMTP_USERNAME'],
+    :password       => ENV['SMTP_PASSWORD'],
+    # :domain         => 'canadiancannabis.co',
+    :enable_starttls_auto => true
+  }
 end

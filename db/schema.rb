@@ -10,23 +10,86 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907132658) do
+ActiveRecord::Schema.define(version: 20180221204717) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "members", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "home_phone"
+    t.string   "mobile_phone"
+    t.string   "title"
+    t.datetime "start_date"
+    t.datetime "termination_date"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["tenant_id"], name: "index_members_on_tenant_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+    t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.string   "name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "province"
+    t.string   "postal_code"
+    t.string   "sales_phone"
+    t.string   "qa_phone"
+    t.string   "production_phone"
+    t.string   "fax"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["name"], name: "index_tenants_on_name", using: :btree
+    t.index ["tenant_id"], name: "index_tenants_on_tenant_id", using: :btree
+  end
+
+  create_table "tenants_users", id: false, force: :cascade do |t|
+    t.integer "tenant_id", null: false
+    t.integer "user_id",   null: false
+    t.index ["tenant_id", "user_id"], name: "index_tenants_users_on_tenant_id_and_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                        default: "",    null: false
+    t.string   "encrypted_password",           default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.boolean  "skip_confirm_change_password", default: false
+    t.integer  "tenant_id"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["tenant_id"], name: "index_users_on_tenant_id", using: :btree
   end
 
+  add_foreign_key "members", "tenants"
+  add_foreign_key "members", "users"
+  add_foreign_key "tenants", "tenants"
 end

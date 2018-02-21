@@ -6,6 +6,7 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -33,7 +34,7 @@ group :development, :test do
   gem 'rails_best_practices'
   # Use sqlite3 as the database for Active Record only for development or
   # testing
-  gem 'sqlite3'
+  # gem 'sqlite3'
 end
 
 group :development do
@@ -51,7 +52,7 @@ end
 
 group :production do
   # Use postgresql for production, as it is required by heroku
-  gem 'pg'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -59,6 +60,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'jquery-ui-rails'
 gem 'ckeditor'
 gem 'devise'
+gem 'milia'
 
 # I18n
 gem 'gettext_i18n_rails'
+
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
