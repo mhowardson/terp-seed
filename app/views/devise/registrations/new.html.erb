@@ -1,29 +1,69 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<%= bootstrap_devise_error_messages! %>
+<div class="panel panel-default devise-bs">
+  <div class="panel-heading">
+    <h4><%= t('.sign_up', default: 'Sign up') %></h4>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+  <div class="panel-body">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: 'form' }) do |f| %>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
+      <%= fields_for( :tenant ) do |w| %>
+        <div class="form-group col-md-6 no-left-padding">
+          <%= w.label :name, 'Site Name' %>
+          <span class='description'>(Unique name for your work sites)</span>
+          <%= w.text_field :name, required: true, class: "form-control" %>
+        </div>
+        <br />
+        <div class="form-group col-md-6 no-left-padding">
+          <%= w.label :address1, 'Street Address' %>
+          <%= w.text_field :address1, required: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-6 no-right-padding">
+          <%= w.label :address2, 'Site Number' %>
+          <%= w.text_field :address2, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-6 no-left-padding">
+          <%= w.label :city, 'City' %>
+          <%= w.text_field :city, required: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-6 no-right-padding">
+          <%= w.label :province, 'Province' %>
+          <%= w.text_field :province, required: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-6 no-left-padding">
+          <%= w.label :postal_code, 'Postal Code' %>
+          <%= w.text_field :postal_code, required: true, class: "form-control" %>
+        </div>
+        <br />
+        <div class="form-group col-md-3">
+          <%= w.label :sales_phone, 'Sales Phone' %>
+          <%= w.text_field :sales_phone, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-3">
+          <%= w.label :qa_phone, 'QA Phone' %>
+          <%= w.text_field :qa_phone, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-3">
+          <%= w.label :production_phone, 'Production Phone' %>
+          <%= w.text_field :production_phone, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-3">
+          <%= w.label :fax, 'Fax Number' %>
+          <%= w.text_field :fax, class: "form-control" %>
+        </div>
+      <% end %>
+      <%= f.submit t('.sign_up', default: 'Sign up'), class: 'btn btn-primary' %>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
+<%= render 'devise/shared/links' %>

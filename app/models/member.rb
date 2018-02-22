@@ -4,8 +4,8 @@ class Member < ApplicationRecord
   acts_as_tenant
 
   DEFAULT_ADMIN = {
-    first_name: "Admin",
-    last_name:  "Please edit me"
+    first_name: "First Name",
+    last_name:  "Last Name"
   }
 
   def self.create_new_member(user, params)

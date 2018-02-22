@@ -13,6 +13,7 @@
  * Basic Styles
  *= require bootstrap
  *= require font-awesome
+ *= require devise_bootstrap_views
  *
  * SmartAdmin Styles : Caution! DO NOT change the order
  *= require smartadmin-production

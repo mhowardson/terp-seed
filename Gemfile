@@ -61,6 +61,7 @@ gem 'jquery-ui-rails'
 gem 'ckeditor'
 gem 'devise'
 gem 'milia'
+gem 'devise-bootstrap-views'
 
 # I18n
 gem 'gettext_i18n_rails'

@@ -10,5 +10,5 @@ class User < ApplicationRecord
 
   def remember_me
     (super == nil) ? '1' : super
-    end
+  end
 end
